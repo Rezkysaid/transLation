@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Cakap Omputih — Belajar English Sebenar</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --bg: #0f1115;
+    --card: #1a1d24;
+    --card2: #20242d;
+    --border: #2b303b;
+    --text: #e8eaf0;
+    --muted: #9aa1b0;
+    --accent: #4f8ef7;
+    --accent2: #34c98e;
+    --gold: #f0b90b;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .wrap {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 28px 18px 48px;
+  }
+
+  header { text-align: center; margin-bottom: 24px; }
+  header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.3px; }
+  header h1 .us { font-size: 1.2rem; }
+  header p { color: var(--muted); font-size: 0.85rem; margin-top: 6px; line-height: 1.5; }
+
+  .input-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px;
+  }
+
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    color: var(--text);
+    font-size: 1.05rem;
+    font-family: inherit;
+    line-height: 1.5;
+    min-height: 72px;
+  }
+  textarea::placeholder { color: #5b6270; }
+
+  .input-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  button.translate {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 11px 26px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  button.translate:active { transform: scale(0.97); }
+  button.translate:disabled { opacity: 0.5; cursor: default; }
+
+  .hint { color: #5b6270; font-size: 0.75rem; margin-right: auto; }
+
+  /* ── Results ── */
+  #results { margin-top: 20px; display: none; }
+  #results.show { display: block; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .out-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .out-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .out-label .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .formal .out-label { color: var(--accent); }
+  .formal .dot { background: var(--accent); }
+  .casual .out-label { color: var(--accent2); }
+  .casual .dot { background: var(--accent2); }
+
+  .out-text { font-size: 1.15rem; line-height: 1.5; font-weight: 500; }
+
+  .context-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 12px;
+    padding: 13px 15px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .context-card .bulb { flex-shrink: 0; }
+  .context-card p { font-size: 0.9rem; line-height: 1.55; color: var(--muted); }
+  .context-card p b { color: var(--text); font-weight: 600; }
+
+  /* ── Loading ── */
+  #loading { display: none; text-align: center; padding: 30px 0; color: var(--muted); font-size: 0.9rem; }
+  #loading.show { display: block; }
+  .spinner {
+    width: 26px; height: 26px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  #error {
+    display: none;
+    margin-top: 16px;
+    background: #2a1a1c;
+    border: 1px solid #4d2a2e;
+    border-radius: 12px;
+    padding: 13px 15px;
+    color: #f08a8a;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+  #error.show { display: block; }
+
+  /* ── Examples ── */
+  .examples { margin-top: 22px; }
+  .examples h3 { font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #5b6270; margin-bottom: 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--text); }
+
+  footer { text-align: center; margin-top: 36px; color: #464c59; font-size: 0.75rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>🇲🇾 → 🇺🇸<span class="us"></span> Cakap Omputih</h1>
+    <p>Taip frasa Bahasa Melayu — dapatkan English yang <b>betul-betul</b> orang Amerika guna, bukan English buku teks.</p>
+  </header>
+
+  <div class="input-card">
+    <textarea id="input" placeholder="Taip frasa Melayu anda di sini... cth: Dah makan ke belum?" rows="3" maxlength="300"></textarea>
+    <div class="input-actions">
+      <span class="hint">Enter untuk hantar</span>
+      <button class="translate" id="btn" onclick="translatePhrase()">Translate</button>
+    </div>
+  </div>
+
+  <div id="loading"><div class="spinner"></div>Tengah fikir macam mana orang putih cakap...</div>
+
+  <div id="error"></div>
+
+  <div id="results">
+    <div class="out-card formal">
+      <div class="out-label"><span class="dot"></span>Formal</div>
+      <div class="out-text" id="formal"></div>
+    </div>
+    <div class="out-card casual">
+      <div class="out-label"><span class="dot"></span>Casual · Native</div>
+      <div class="out-text" id="casual"></div>
+    </div>
+    <div class="context-card">
+      <span class="bulb">💡</span>
+      <p><b>Bila nak guna:</b> <span id="context"></span></p>
+    </div>
+  </div>
+
+  <div class="examples" id="examples">
+    <h3>Cuba contoh ini</h3>
+    <div class="chips">
+      <button class="chip" onclick="useExample(this)">Dah makan ke belum?</button>
+      <button class="chip" onclick="useExample(this)">Jom lepak petang ni</button>
+      <button class="chip" onclick="useExample(this)">Maaf, saya lambat sikit</button>
+      <button class="chip" onclick="useExample(this)">Tak apa, jangan risau</button>
+    </div>
+  </div>
+
+  <footer>Belajar English sebenar, satu frasa satu masa.</footer>
+</div>
+
+<script>
+const PROXY_URL = "https://muhasabah-app.vercel.app/api/gemini";
+
+const input = document.getElementById("input");
+const btn = document.getElementById("btn");
+const loading = document.getElementById("loading");
+const results = document.getElementById("results");
+const errorBox = document.getElementById("error");
+
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    translatePhrase();
+  }
+});
+
+function useExample(chip) {
+  input.value = chip.textContent;
+  translatePhrase();
+}
+
+function buildPrompt(phrase) {
+  return `You are an English tutor for Malay speakers.
+The user gives you a phrase in Bahasa Melayu.
+Focus on conversational, everyday English only.
+
+The phrase: "${phrase}"
+
+Return EXACTLY three lines in this format, nothing else:
+FORMAL: a formal/polite English translation suitable for professional or official situations
+CASUAL: how a native American speaker would naturally say this in everyday conversation (use natural slang and contractions where appropriate — it must sound like a real person, not a textbook)
+CONTEXT: one short sentence, written in simple Bahasa Melayu, explaining when to use the formal version vs the casual version
+
+If the input is not Bahasa Melayu or is not translatable, still use the same three-line format but explain the issue briefly in the CONTEXT line.`;
+}
+
+function parseResponse(raw) {
+  const grab = (label) => {
+    const m = raw.match(new RegExp("^\\s*\\**" + label + "\\**\\s*:\\s*(.+)$", "mi"));
+    return m ? m[1].replace(/\*\*/g, "").trim() : null;
+  };
+  return {
+    formal: grab("FORMAL"),
+    casual: grab("CASUAL"),
+    context: grab("CONTEXT"),
+  };
+}
+
+async function translatePhrase() {
+  const phrase = input.value.trim();
+  if (!phrase || btn.disabled) return;
+
+  btn.disabled = true;
+  results.classList.remove("show");
+  errorBox.classList.remove("show");
+  loading.classList.add("show");
+
+  try {
+    const res = await fetch(PROXY_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: buildPrompt(phrase) })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message || data.error);
+
+    const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+    const { formal, casual, context } = parseResponse(raw);
+    if (!formal || !casual) throw new Error("Respons tak lengkap. Cuba sekali lagi.");
+
+    document.getElementById("formal").textContent = formal;
+    document.getElementById("casual").textContent = casual;
+    document.getElementById("context").textContent = context || "—";
+    results.classList.add("show");
+  } catch (e) {
+    errorBox.textContent = "Alamak, ada masalah: " + e.message;
+    errorBox.classList.add("show");
+  } finally {
+    loading.classList.remove("show");
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
