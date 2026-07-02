@@ -2,210 +2,388 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Cakap Omputih — Belajar English Sebenar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cakap Omputih — Malay to Native English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #0f1115;
-    --card: #1a1d24;
-    --card2: #20242d;
-    --border: #2b303b;
-    --text: #e8eaf0;
-    --muted: #9aa1b0;
-    --accent: #4f8ef7;
-    --accent2: #34c98e;
-    --gold: #f0b90b;
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --border: #e4e4e7;
+    --border-strong: #d4d4d8;
+    --text: #18181b;
+    --text-secondary: #52525b;
+    --text-tertiary: #a1a1aa;
+    --accent: #2563eb;
+    --accent-soft: #eff6ff;
+    --danger: #dc2626;
+    --danger-soft: #fef2f2;
+    --danger-border: #fecaca;
+    --shadow-sm: 0 1px 2px rgba(24, 24, 27, 0.04);
+    --shadow-md: 0 1px 3px rgba(24, 24, 27, 0.06), 0 4px 12px rgba(24, 24, 27, 0.05);
+    --radius: 12px;
   }
 
+  html { -webkit-text-size-adjust: 100%; }
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
     min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
   }
 
-  .wrap {
-    max-width: 560px;
+  /* ── Top bar ── */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-inner {
+    max-width: 640px;
     margin: 0 auto;
-    padding: 28px 18px 48px;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark {
+    width: 28px;
+    height: 28px;
+    background: var(--text);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-mark svg { width: 15px; height: 15px; stroke: #fff; }
+  .wordmark { font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; }
+  .topbar-right {
+    margin-left: auto;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    letter-spacing: 0.01em;
   }
 
-  header { text-align: center; margin-bottom: 24px; }
-  header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.3px; }
-  header h1 .us { font-size: 1.2rem; }
-  header p { color: var(--muted); font-size: 0.85rem; margin-top: 6px; line-height: 1.5; }
+  /* ── Layout ── */
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+  }
 
+  .hero { margin-bottom: 32px; }
+  .hero h1 {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .hero p {
+    margin-top: 8px;
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 46ch;
+  }
+
+  /* ── Input ── */
   .input-card {
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 14px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .input-card:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
   }
 
   textarea {
+    display: block;
     width: 100%;
+    padding: 16px 18px 8px;
     background: transparent;
     border: none;
     outline: none;
     resize: none;
     color: var(--text);
-    font-size: 1.05rem;
+    font-size: 16px;
     font-family: inherit;
-    line-height: 1.5;
-    min-height: 72px;
+    line-height: 1.55;
+    min-height: 88px;
   }
-  textarea::placeholder { color: #5b6270; }
+  textarea::placeholder { color: var(--text-tertiary); }
 
-  .input-actions {
+  .input-footer {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
-    gap: 10px;
-    margin-top: 6px;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px 12px 18px;
+  }
+  .hint {
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hint kbd {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    padding: 1px 6px;
   }
 
   button.translate {
-    background: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: auto;
+    background: var(--text);
     color: #fff;
     border: none;
-    border-radius: 12px;
-    padding: 11px 26px;
-    font-size: 0.95rem;
-    font-weight: 600;
+    border-radius: 8px;
+    padding: 9px 18px;
+    font-size: 14px;
+    font-weight: 500;
     font-family: inherit;
+    letter-spacing: -0.01em;
     cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
+    transition: background 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
   }
-  button.translate:active { transform: scale(0.97); }
-  button.translate:disabled { opacity: 0.5; cursor: default; }
-
-  .hint { color: #5b6270; font-size: 0.75rem; margin-right: auto; }
+  button.translate svg { width: 14px; height: 14px; stroke: #fff; }
+  button.translate:hover { background: #3f3f46; }
+  button.translate:active { transform: scale(0.98); }
+  button.translate:disabled { opacity: 0.45; cursor: default; }
+  button.translate:disabled:hover { background: var(--text); }
+  button.translate:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   /* ── Results ── */
-  #results { margin-top: 20px; display: none; }
-  #results.show { display: block; animation: fadeUp 0.3s ease; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  #results { margin-top: 28px; display: none; }
+  #results.show { display: block; animation: fadeUp 0.25s ease; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
 
   .out-card {
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 16px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 18px 20px;
     margin-bottom: 12px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
+  .out-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
 
   .out-label {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 1.2px;
+    gap: 7px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    color: var(--text-tertiary);
+    margin-bottom: 10px;
   }
-  .out-label .dot { width: 8px; height: 8px; border-radius: 50%; }
-  .formal .out-label { color: var(--accent); }
-  .formal .dot { background: var(--accent); }
-  .casual .out-label { color: var(--accent2); }
-  .casual .dot { background: var(--accent2); }
+  .out-label svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--text-tertiary);
+  }
 
-  .out-text { font-size: 1.15rem; line-height: 1.5; font-weight: 500; }
+  .out-text {
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+    color: var(--text);
+  }
 
   .context-card {
-    background: var(--card2);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--gold);
-    border-radius: 12px;
-    padding: 13px 15px;
+    background: var(--accent-soft);
+    border: 1px solid #dbeafe;
+    border-radius: var(--radius);
+    padding: 14px 18px;
     display: flex;
     gap: 10px;
     align-items: flex-start;
   }
-  .context-card .bulb { flex-shrink: 0; }
-  .context-card p { font-size: 0.9rem; line-height: 1.55; color: var(--muted); }
-  .context-card p b { color: var(--text); font-weight: 600; }
+  .context-card svg {
+    width: 15px;
+    height: 15px;
+    stroke: var(--accent);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .context-card p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #1e40af;
+  }
+  .context-card p b { font-weight: 600; }
 
   /* ── Loading ── */
-  #loading { display: none; text-align: center; padding: 30px 0; color: var(--muted); font-size: 0.9rem; }
-  #loading.show { display: block; }
+  #loading {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 36px 0;
+    color: var(--text-secondary);
+    font-size: 13.5px;
+  }
+  #loading.show { display: flex; }
   .spinner {
-    width: 26px; height: 26px;
-    border: 3px solid var(--border);
-    border-top-color: var(--accent);
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--border);
+    border-top-color: var(--text-secondary);
     border-radius: 50%;
-    margin: 0 auto 12px;
-    animation: spin 0.8s linear infinite;
+    animation: spin 0.7s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* ── Error ── */
   #error {
     display: none;
-    margin-top: 16px;
-    background: #2a1a1c;
-    border: 1px solid #4d2a2e;
-    border-radius: 12px;
-    padding: 13px 15px;
-    color: #f08a8a;
-    font-size: 0.88rem;
-    line-height: 1.5;
+    margin-top: 20px;
+    background: var(--danger-soft);
+    border: 1px solid var(--danger-border);
+    border-radius: var(--radius);
+    padding: 13px 16px;
+    color: var(--danger);
+    font-size: 13.5px;
+    line-height: 1.55;
   }
   #error.show { display: block; }
 
   /* ── Examples ── */
-  .examples { margin-top: 22px; }
-  .examples h3 { font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #5b6270; margin-bottom: 10px; }
+  .examples { margin-top: 36px; }
+  .examples h3 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+  }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip {
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--border);
-    color: var(--muted);
-    border-radius: 20px;
-    padding: 8px 14px;
-    font-size: 0.85rem;
+    color: var(--text-secondary);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 13.5px;
+    font-weight: 450;
     font-family: inherit;
     cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
   }
-  .chip:hover { border-color: var(--accent); color: var(--text); }
+  .chip:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+    box-shadow: var(--shadow-md);
+  }
+  .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-  footer { text-align: center; margin-top: 36px; color: #464c59; font-size: 0.75rem; }
+  footer {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px 40px;
+    color: var(--text-tertiary);
+    font-size: 12.5px;
+  }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 32px 20px 48px; }
+    .hero h1 { font-size: 21px; }
+    .hint { display: none; }
+  }
 </style>
 </head>
 <body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/>
+        <path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/>
+      </svg>
+    </div>
+    <span class="wordmark">Cakap Omputih</span>
+    <span class="topbar-right">Malay &rarr; English</span>
+  </div>
+</header>
+
 <div class="wrap">
 
-  <header>
-    <h1>🇲🇾 → 🇺🇸<span class="us"></span> Cakap Omputih</h1>
-    <p>Taip frasa Bahasa Melayu — dapatkan English yang <b>betul-betul</b> orang Amerika guna, bukan English buku teks.</p>
-  </header>
+  <div class="hero">
+    <h1>English yang natural, bukan buku teks</h1>
+    <p>Taip frasa Bahasa Melayu dan dapatkan cara orang Amerika betul-betul menyebutnya dalam perbualan harian.</p>
+  </div>
 
   <div class="input-card">
     <textarea id="input" placeholder="Taip frasa Melayu anda di sini... cth: Dah makan ke belum?" rows="3" maxlength="300"></textarea>
-    <div class="input-actions">
-      <span class="hint">Enter untuk hantar</span>
-      <button class="translate" id="btn" onclick="translatePhrase()">Translate</button>
+    <div class="input-footer">
+      <span class="hint"><kbd>Enter</kbd> untuk hantar</span>
+      <button class="translate" id="btn" onclick="translatePhrase()">
+        Translate
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+        </svg>
+      </button>
     </div>
   </div>
 
-  <div id="loading"><div class="spinner"></div>Tengah fikir macam mana orang putih cakap...</div>
+  <div id="loading"><span class="spinner"></span>Mencari cara orang native cakap...</div>
 
   <div id="error"></div>
 
   <div id="results">
-    <div class="out-card formal">
-      <div class="out-label"><span class="dot"></span>Formal</div>
+    <div class="out-card">
+      <div class="out-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+        </svg>
+        Formal
+      </div>
       <div class="out-text" id="formal"></div>
     </div>
-    <div class="out-card casual">
-      <div class="out-label"><span class="dot"></span>Casual · Native</div>
+    <div class="out-card">
+      <div class="out-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        Casual &middot; Native
+      </div>
       <div class="out-text" id="casual"></div>
     </div>
     <div class="context-card">
-      <span class="bulb">💡</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+      </svg>
       <p><b>Bila nak guna:</b> <span id="context"></span></p>
     </div>
   </div>
@@ -220,8 +398,9 @@
     </div>
   </div>
 
-  <footer>Belajar English sebenar, satu frasa satu masa.</footer>
 </div>
+
+<footer>Belajar English sebenar, satu frasa satu masa.</footer>
 
 <script>
 const PROXY_URL = "https://muhasabah-app.vercel.app/api/gemini";
@@ -298,7 +477,7 @@ async function translatePhrase() {
     document.getElementById("context").textContent = context || "—";
     results.classList.add("show");
   } catch (e) {
-    errorBox.textContent = "Alamak, ada masalah: " + e.message;
+    errorBox.textContent = "Ada masalah: " + e.message;
     errorBox.classList.add("show");
   } finally {
     loading.classList.remove("show");
