@@ -12,6 +12,8 @@ For every Malay phrase, the app returns:
 
 Everything lives in a single `index.html` — no build step. Translations come from Gemini via a serverless proxy so the API key stays secret.
 
+The site is also an installable **PWA**: `manifest.json` + icons + a small network-first service worker (`sw.js`), so users can Add to Home Screen on iOS/Android and the app shell opens even offline. This also makes the site packageable into an Android APK via [PWABuilder](https://www.pwabuilder.com).
+
 ## How it works
 
 ```
