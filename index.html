@@ -134,8 +134,8 @@
   .hero { animation-delay: 0.05s; }
   .input-card { animation-delay: 0.12s; }
   .examples { animation-delay: 0.2s; }
-  .features { animation-delay: 0.28s; }
-  footer { animation-delay: 0.35s; }
+  .features { animation-delay: 0.5s; }
+  footer { animation-delay: 0.58s; }
 
   /* ── Input ── */
   .input-card {
@@ -333,19 +333,37 @@
     color: var(--text-tertiary);
     margin-bottom: 12px;
   }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .chip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    border-radius: 999px;
-    padding: 7px 14px;
+    border-radius: 12px;
+    padding: 12px 14px;
     font-size: 13.5px;
     font-weight: 450;
     font-family: inherit;
+    text-align: left;
+    line-height: 1.45;
     cursor: pointer;
     box-shadow: var(--shadow-sm);
     transition: border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  .chip:nth-child(1) { animation-delay: 0.24s; }
+  .chip:nth-child(2) { animation-delay: 0.3s; }
+  .chip:nth-child(3) { animation-delay: 0.36s; }
+  .chip:nth-child(4) { animation-delay: 0.42s; }
+  .chip svg {
+    width: 13px;
+    height: 13px;
+    stroke: var(--text-tertiary);
+    flex-shrink: 0;
+    transition: transform 0.18s ease, stroke 0.18s ease;
   }
   .chip:hover {
     border-color: var(--border-strong);
@@ -353,6 +371,7 @@
     box-shadow: var(--shadow-md);
     transform: translateY(-1px);
   }
+  .chip:hover svg { stroke: var(--accent); transform: translate(2px, -2px); }
   .chip:active { transform: translateY(0); }
   .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
@@ -465,10 +484,18 @@
   <div class="examples" id="examples">
     <h3>Cuba contoh ini</h3>
     <div class="chips">
-      <button class="chip" onclick="useExample(this)">Dah makan ke belum?</button>
-      <button class="chip" onclick="useExample(this)">Jom lepak petang ni</button>
-      <button class="chip" onclick="useExample(this)">Maaf, saya lambat sikit</button>
-      <button class="chip" onclick="useExample(this)">Tak apa, jangan risau</button>
+      <button class="chip" onclick="useExample(this)"><span>Dah makan ke belum?</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+      </button>
+      <button class="chip" onclick="useExample(this)"><span>Jom lepak petang ni</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+      </button>
+      <button class="chip" onclick="useExample(this)"><span>Maaf, saya lambat sikit</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+      </button>
+      <button class="chip" onclick="useExample(this)"><span>Tak apa, jangan risau</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+      </button>
     </div>
   </div>
 
@@ -514,7 +541,7 @@ input.addEventListener("keydown", (e) => {
 });
 
 function useExample(chip) {
-  input.value = chip.textContent;
+  input.value = chip.querySelector("span").textContent;
   translatePhrase();
 }
 
