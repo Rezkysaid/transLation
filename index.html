@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
 <meta name="description" content="Terjemah frasa Bahasa Melayu ke English yang natural — cara orang Amerika betul-betul cakap, bukan buku teks.">
 <title>Cakap Omputih — Malay to Native English</title>
@@ -37,7 +37,10 @@
     --font-display: "Space Grotesk", "Inter", -apple-system, sans-serif;
   }
 
-  html { -webkit-text-size-adjust: 100%; }
+  html {
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior: none;
+  }
 
   body {
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -48,7 +51,21 @@
     min-height: 100vh;
     min-height: 100dvh;
     -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
   }
+
+  /* translations must stay copyable */
+  textarea, .out-text, .context-card p {
+    user-select: text;
+    -webkit-user-select: text;
+    -webkit-touch-callout: default;
+  }
+
+  button, .chip { touch-action: manipulation; }
 
   body::before {
     content: "";
@@ -629,6 +646,16 @@ async function translatePhrase() {
     btn.disabled = false;
   }
 }
+
+// iOS Safari ignores user-scalable=no in the browser, so block pinch and
+// double-tap zoom by hand; standalone (home screen) mode honours the meta.
+document.addEventListener("gesturestart", (e) => e.preventDefault());
+let lastTouch = 0;
+document.addEventListener("touchend", (e) => {
+  const now = Date.now();
+  if (now - lastTouch < 300 && !e.target.closest("textarea, button, a")) e.preventDefault();
+  lastTouch = now;
+}, { passive: false });
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
