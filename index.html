@@ -472,7 +472,7 @@
     </div>
   </div>
 
-  <div id="loading"><span class="spinner"></span>Mencari cara orang native cakap...</div>
+  <div id="loading"><span class="spinner"></span><span id="loadingText">Mencari cara orang native cakap...</span></div>
 
   <div id="error"></div>
 
@@ -552,6 +552,7 @@ const PROXY_URL = "https://muhasabah-app.vercel.app/api/gemini";
 const input = document.getElementById("input");
 const btn = document.getElementById("btn");
 const loading = document.getElementById("loading");
+const loadingText = document.getElementById("loadingText");
 const results = document.getElementById("results");
 const errorBox = document.getElementById("error");
 
@@ -612,13 +613,20 @@ function parseResponse(raw) {
   };
 }
 
-async function translatePhrase() {
+let retryTimer = null;
+
+async function translatePhrase(attempt = 0) {
   const phrase = input.value.trim();
-  if (!phrase || btn.disabled) return;
+  if (!phrase) return;
+  if (attempt === 0) {
+    if (btn.disabled) return;
+    clearTimeout(retryTimer);
+  }
 
   btn.disabled = true;
   results.classList.remove("show");
   errorBox.classList.remove("show");
+  loadingText.textContent = "Mencari cara orang native cakap...";
   loading.classList.add("show");
 
   try {
@@ -639,12 +647,30 @@ async function translatePhrase() {
     document.getElementById("context").textContent = context || "—";
     results.classList.add("show");
   } catch (e) {
-    errorBox.textContent = "Ada masalah: " + e.message;
+    const msg = e && e.message ? String(e.message) : String(e);
+    const isQuota = /quota|RESOURCE_EXHAUSTED|rate ?limit|retry in/i.test(msg);
+    if (isQuota && attempt < 1) {
+      let wait = Math.ceil(parseFloat((msg.match(/retry in ([\d.]+)/i) || [])[1]) || 30);
+      wait = Math.min(Math.max(wait, 3), 60);
+      startRetryCountdown(wait, attempt);
+      return; // countdown keeps the loading state and retries by itself
+    }
+    errorBox.textContent = isQuota
+      ? "Ramai orang tengah guna sekarang — tunggu seminit, lepas tu cuba lagi ya."
+      : "Ada masalah: " + msg;
     errorBox.classList.add("show");
-  } finally {
     loading.classList.remove("show");
     btn.disabled = false;
+    return;
   }
+  loading.classList.remove("show");
+  btn.disabled = false;
+}
+
+function startRetryCountdown(secondsLeft, attempt) {
+  if (secondsLeft <= 0) { translatePhrase(attempt + 1); return; }
+  loadingText.textContent = "Ramai orang tengah guna — cuba semula dalam " + secondsLeft + "s";
+  retryTimer = setTimeout(() => startRetryCountdown(secondsLeft - 1, attempt), 1000);
 }
 
 // iOS Safari ignores user-scalable=no in the browser, so block pinch and
