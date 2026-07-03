@@ -45,9 +45,24 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(640px 320px at 50% -100px, rgba(37, 99, 235, 0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  .wrap, footer { position: relative; z-index: 1; }
+
   /* ── Top bar ── */
   .topbar {
-    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: saturate(180%) blur(10px);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
     border-bottom: 1px solid var(--border);
   }
   .topbar-inner {
@@ -99,6 +114,28 @@
     color: var(--text-tertiary);
     letter-spacing: -0.005em;
   }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+    background: linear-gradient(100deg, var(--accent), #60a5fa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ── Entrance ── */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+  .hero, .input-card, .examples, .features, footer {
+    animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  .hero { animation-delay: 0.05s; }
+  .input-card { animation-delay: 0.12s; }
+  .examples { animation-delay: 0.2s; }
+  .features { animation-delay: 0.28s; }
+  footer { animation-delay: 0.35s; }
 
   /* ── Input ── */
   .input-card {
@@ -170,10 +207,11 @@
     font-family: inherit;
     letter-spacing: -0.01em;
     cursor: pointer;
-    transition: background 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
+    transition: background 0.15s ease, transform 0.1s ease, opacity 0.15s ease, box-shadow 0.18s ease;
   }
-  button.translate svg { width: 14px; height: 14px; stroke: #fff; }
-  button.translate:hover { background: #3f3f46; }
+  button.translate svg { width: 14px; height: 14px; stroke: #fff; transition: transform 0.18s ease; }
+  button.translate:hover { background: #3f3f46; box-shadow: 0 4px 12px rgba(24, 24, 27, 0.18); }
+  button.translate:hover svg { transform: translateX(3px); }
   button.translate:active { transform: scale(0.98); }
   button.translate:disabled { opacity: 0.45; cursor: default; }
   button.translate:disabled:hover { background: var(--text); }
@@ -181,9 +219,12 @@
 
   /* ── Results ── */
   #results { margin-top: 28px; display: none; }
-  #results.show { display: block; animation: fadeUp 0.25s ease; }
+  #results.show { display: block; }
+  #results.show > * { animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+  #results.show > *:nth-child(2) { animation-delay: 0.09s; }
+  #results.show > *:nth-child(3) { animation-delay: 0.18s; }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: none; }
   }
 
@@ -256,7 +297,8 @@
     color: var(--text-secondary);
     font-size: 13.5px;
   }
-  #loading.show { display: flex; }
+  #loading.show { display: flex; animation: pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
   .spinner {
     width: 16px;
     height: 16px;
@@ -303,14 +345,30 @@
     font-family: inherit;
     cursor: pointer;
     box-shadow: var(--shadow-sm);
-    transition: border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    transition: border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
   }
   .chip:hover {
     border-color: var(--border-strong);
     color: var(--text);
     box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
   }
+  .chip:active { transform: translateY(0); }
   .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ── Features ── */
+  .features {
+    margin-top: 44px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px 14px;
+  }
+  .feature { display: flex; align-items: flex-start; gap: 9px; }
+  .feature svg { width: 15px; height: 15px; stroke: var(--accent); flex-shrink: 0; margin-top: 2px; }
+  .feature b { display: block; font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
+  .feature span { display: block; font-size: 12px; color: var(--text-tertiary); line-height: 1.45; margin-top: 1px; }
 
   footer {
     max-width: 640px;
@@ -324,6 +382,17 @@
     .wrap { padding: 32px 20px 48px; }
     .hero h1 { font-size: 23px; }
     .hint { display: none; }
+    .features { gap: 14px 10px; }
+    .feature b { font-size: 12.5px; }
+    .feature span { font-size: 11.5px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 </style>
 </head>
@@ -345,7 +414,7 @@
 <div class="wrap">
 
   <div class="hero">
-    <h1>English yang natural</h1>
+    <h1>English yang <em>natural</em></h1>
     <p>Macam orang putih cakap &mdash; bukan buku teks.</p>
   </div>
 
@@ -403,6 +472,27 @@
     </div>
   </div>
 
+  <div class="features">
+    <div class="feature">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+      </svg>
+      <div><b>Formal</b><span>Untuk email &amp; situasi rasmi</span></div>
+    </div>
+    <div class="feature">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <div><b>Casual</b><span>Macam native betul-betul cakap</span></div>
+    </div>
+    <div class="feature">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+      </svg>
+      <div><b>Konteks</b><span>Bila guna yang mana</span></div>
+    </div>
+  </div>
+
 </div>
 
 <footer>Belajar English sebenar, satu frasa satu masa.</footer>
@@ -426,6 +516,24 @@ input.addEventListener("keydown", (e) => {
 function useExample(chip) {
   input.value = chip.textContent;
   translatePhrase();
+}
+
+// Cycle example phrases through the placeholder while the field is idle
+const PH_EXAMPLES = ["Dah makan ke belum?", "Jom lepak petang ni", "Boleh tolong sikit tak?", "Tak apa, jangan risau"];
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  let phWord = 0, phLen = 0, phDeleting = false;
+  (function typePlaceholder() {
+    let delay = phDeleting ? 28 : 65;
+    if (document.activeElement !== input && !input.value) {
+      const word = PH_EXAMPLES[phWord];
+      phLen += phDeleting ? -1 : 1;
+      input.placeholder = word.slice(0, phLen);
+      if (!phDeleting && phLen === word.length) { phDeleting = true; delay = 1600; }
+      else if (phDeleting && phLen === 0) { phDeleting = false; phWord = (phWord + 1) % PH_EXAMPLES.length; delay = 350; }
+    }
+    setTimeout(typePlaceholder, delay);
+  })();
+  input.addEventListener("focus", () => { input.placeholder = "Taip frasa Melayu…"; });
 }
 
 function buildPrompt(phrase) {
