@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#faf6ee">
 <meta name="description" content="Terjemah frasa Bahasa Melayu ke English yang natural — cara orang Amerika betul-betul cakap, bukan buku teks.">
 <title>Cakap Omputih — Malay to Native English</title>
 <link rel="manifest" href="manifest.json">
@@ -11,30 +11,31 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Cakap Omputih">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2318181b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='2' width='20' height='20' rx='5' fill='%2318181b' stroke='none'/%3E%3Cg stroke='%23fff'%3E%3Cpath d='M5 8l6 6'/%3E%3Cpath d='M4 14l6-6 2-3'/%3E%3Cpath d='M2 5h12'/%3E%3Cpath d='M22 22l-5-10-5 10'/%3E%3Cpath d='M14 18h6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2318181b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='2' width='20' height='20' rx='5' fill='%232b2318' stroke='none'/%3E%3Cg stroke='%23fff'%3E%3Cpath d='M5 8l6 6'/%3E%3Cpath d='M4 14l6-6 2-3'/%3E%3Cpath d='M2 5h12'/%3E%3Cpath d='M22 22l-5-10-5 10'/%3E%3Cpath d='M14 18h6'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,600&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #fafafa;
-    --surface: #ffffff;
-    --border: #e4e4e7;
-    --border-strong: #d4d4d8;
-    --text: #18181b;
-    --text-secondary: #52525b;
-    --text-tertiary: #a1a1aa;
-    --accent: #2563eb;
-    --accent-soft: #eff6ff;
-    --danger: #dc2626;
-    --danger-soft: #fef2f2;
-    --danger-border: #fecaca;
-    --shadow-sm: 0 1px 2px rgba(24, 24, 27, 0.04);
-    --shadow-md: 0 1px 3px rgba(24, 24, 27, 0.06), 0 4px 12px rgba(24, 24, 27, 0.05);
-    --radius: 12px;
-    --font-display: "Space Grotesk", "Inter", -apple-system, sans-serif;
+    --bg: #faf6ee;
+    --surface: #fffdf7;
+    --border: #eae1cf;
+    --border-strong: #d9cdb4;
+    --text: #2b2318;
+    --text-secondary: #6b5f4b;
+    --text-tertiary: #a3947c;
+    --accent: #c2410c;
+    --accent-soft: #faeee2;
+    --danger: #b91c1c;
+    --danger-soft: #fdf0ec;
+    --danger-border: #f3d0c4;
+    --shadow-sm: 0 1px 2px rgba(43, 35, 24, 0.05);
+    --shadow-md: 0 1px 3px rgba(43, 35, 24, 0.07), 0 4px 14px rgba(43, 35, 24, 0.06);
+    --radius: 14px;
+    --font-display: "Fraunces", Georgia, serif;
+    --font-hand: "Caveat", "Segoe Script", cursive;
   }
 
   html {
@@ -71,18 +72,29 @@
     content: "";
     position: fixed;
     inset: 0;
-    background: radial-gradient(640px 320px at 50% -100px, rgba(37, 99, 235, 0.08), transparent 70%);
+    background: radial-gradient(640px 320px at 50% -100px, rgba(194, 65, 12, 0.07), transparent 70%);
     pointer-events: none;
   }
 
+  /* faint paper grain */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.35 0 0 0 0 0.24 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
   .wrap, footer { position: relative; z-index: 1; }
+
+  ::selection { background: rgba(194, 65, 12, 0.18); }
 
   /* ── Top bar ── */
   .topbar {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(250, 246, 238, 0.85);
     backdrop-filter: saturate(180%) blur(10px);
     -webkit-backdrop-filter: saturate(180%) blur(10px);
     border-bottom: 1px solid var(--border);
@@ -125,9 +137,9 @@
   .hero { margin-bottom: 24px; }
   .hero h1 {
     font-family: var(--font-display);
-    font-size: 26px;
+    font-size: 29px;
     font-weight: 600;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.01em;
     line-height: 1.15;
   }
   .hero p {
@@ -137,12 +149,13 @@
     letter-spacing: -0.005em;
   }
   .hero h1 em {
-    font-style: normal;
+    font-style: italic;
     color: var(--accent);
-    background: linear-gradient(100deg, var(--accent), #60a5fa);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    padding-bottom: 7px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='8' viewBox='0 0 80 8'%3E%3Cpath d='M2 5 Q 12 1 22 5 T 42 5 T 62 5 T 82 5' fill='none' stroke='%23c2410c' stroke-width='2.5' stroke-linecap='round' opacity='0.55'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-size: 80px 8px;
+    background-position: 0 100%;
   }
 
   /* ── Entrance ── */
@@ -169,7 +182,7 @@
   }
   .input-card:focus-within {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(194, 65, 12, 0.1);
   }
 
   textarea {
@@ -220,9 +233,9 @@
     gap: 7px;
     margin-left: auto;
     background: var(--text);
-    color: #fff;
+    color: #fdf8ee;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 9px 18px;
     font-size: 14px;
     font-weight: 500;
@@ -232,7 +245,7 @@
     transition: background 0.15s ease, transform 0.1s ease, opacity 0.15s ease, box-shadow 0.18s ease;
   }
   button.translate svg { width: 14px; height: 14px; stroke: #fff; transition: transform 0.18s ease; }
-  button.translate:hover { background: #3f3f46; box-shadow: 0 4px 12px rgba(24, 24, 27, 0.18); }
+  button.translate:hover { background: #453826; box-shadow: 0 4px 12px rgba(43, 35, 24, 0.2); }
   button.translate:hover svg { transform: translateX(3px); }
   button.translate:active { transform: scale(0.98); }
   button.translate:disabled { opacity: 0.45; cursor: default; }
@@ -288,7 +301,7 @@
 
   .context-card {
     background: var(--accent-soft);
-    border: 1px solid #dbeafe;
+    border: 1.5px dashed #dcb894;
     border-radius: var(--radius);
     padding: 14px 18px;
     display: flex;
@@ -305,9 +318,15 @@
   .context-card p {
     font-size: 13.5px;
     line-height: 1.6;
-    color: #1e40af;
+    color: #7c451c;
   }
-  .context-card p b { font-weight: 600; }
+  .context-card p b {
+    font-family: var(--font-hand);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--accent);
+    margin-right: 2px;
+  }
 
   /* ── Loading ── */
   #loading {
@@ -317,7 +336,8 @@
     gap: 10px;
     padding: 36px 0;
     color: var(--text-secondary);
-    font-size: 13.5px;
+    font-family: var(--font-hand);
+    font-size: 18px;
   }
   #loading.show { display: flex; animation: pulse 1.8s ease-in-out infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
@@ -376,10 +396,10 @@
     transition: border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
     animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
   }
-  .chip:nth-child(1) { animation-delay: 0.24s; }
-  .chip:nth-child(2) { animation-delay: 0.3s; }
-  .chip:nth-child(3) { animation-delay: 0.36s; }
-  .chip:nth-child(4) { animation-delay: 0.42s; }
+  .chip:nth-child(1) { animation-delay: 0.24s; transform: rotate(-0.6deg); }
+  .chip:nth-child(2) { animation-delay: 0.3s; transform: rotate(0.5deg); }
+  .chip:nth-child(3) { animation-delay: 0.36s; transform: rotate(0.4deg); }
+  .chip:nth-child(4) { animation-delay: 0.42s; transform: rotate(-0.5deg); }
   .chip svg {
     width: 13px;
     height: 13px;
@@ -391,10 +411,10 @@
     border-color: var(--border-strong);
     color: var(--text);
     box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
+    transform: translateY(-2px) rotate(0deg);
   }
   .chip:hover svg { stroke: var(--accent); transform: translate(2px, -2px); }
-  .chip:active { transform: translateY(0); }
+  .chip:active { transform: translateY(0) rotate(0deg); }
   .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   /* ── Features ── */
@@ -416,7 +436,9 @@
     margin: 0 auto;
     padding: 0 24px 40px;
     color: var(--text-tertiary);
-    font-size: 12.5px;
+    font-family: var(--font-hand);
+    font-size: 17px;
+    transform: rotate(-0.5deg);
   }
 
   @media (max-width: 480px) {
